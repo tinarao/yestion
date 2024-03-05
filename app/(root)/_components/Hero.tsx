@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
+import HeroDocsDark from "@/public/hero/home-hero-dark.png"
 import HeroDocs from "@/public/hero/home-hero.webp"
 
 const Hero = () => {
@@ -23,7 +24,20 @@ const Hero = () => {
         </Button>
       </div>
       <div className="w-fit mx-auto">
-        <Image src={HeroDocs} height={300} width={600} alt="Drawings" />
+        <Image 
+          src={HeroDocs} 
+          height={300} 
+          width={600} 
+          alt="Drawings"
+          className="dark:hidden pointer-events-none"
+        />
+        <Image 
+          src={HeroDocsDark} 
+          height={300} 
+          width={600} 
+          alt="Drawings"
+          className="light:hidden pointer-events-none"
+        />
       </div>
     </section>
   );
