@@ -53,9 +53,9 @@ const DocumentList = ({ parentDocumentId, level = 0 }: DLProps) => {
         <>
             <p 
                 className={`hidden text-sm font-medium text-muted-foreground/80 ${expanded && "last:block"} ${level === 0 && "hidden"}`}
-                style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
+                style={{ paddingLeft: level ? `${level * 12 + 25 }px` : undefined }}
             >
-                no children pages
+                Нет дочерних страниц
             </p>
             {documents.map((document) => (
                     <div key={document._id}>

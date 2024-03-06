@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <body className={`${inter.className} bg-background dark:bg-[#1F1F1F]`}>
         <ConvexClientProvider>
           <ThemeProvider
