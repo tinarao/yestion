@@ -6,6 +6,8 @@ import { ElementRef, MouseEvent, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserMenu from "./UserItems";
 
+// i hate ts
+
 const NavBar = () => {
 
   const pathname = usePathname();
@@ -32,12 +34,13 @@ const NavBar = () => {
   }, [pathname, isMobile])
 
   const mouseDownHandler = (
-    e: MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    e.preventDefault();
-    e.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
     isResizingRef.current = true;
+    // @ts-ignore
     document.addEventListener("mousemove", mouseMoveHandler);
     document.addEventListener("mouseup", mouseUpHandler);
   }
@@ -46,12 +49,9 @@ const NavBar = () => {
     if (!isResizingRef.current) return;
     let newWidth = e.clientX;
 
-    if (newWidth < 240) {
-      newWidth = 240;
-    } else if (newWidth > 480) {
-      newWidth = 480;
-    }
-    
+    if (newWidth < 240) newWidth = 240;
+    if (newWidth > 480) newWidth = 480;
+
     if (sidebarRef.current && navbarRef.current) {
       sidebarRef.current.style.width = `${newWidth}px`;
       navbarRef.current.style.setProperty("left", `${newWidth}px`);
@@ -61,8 +61,9 @@ const NavBar = () => {
 
   const mouseUpHandler = () => {
     isResizingRef.current = false;
-    document.removeEventListener("mousemove", mouseMoveHandler)
-    document.removeEventListener("mouseup", mouseUpHandler)
+    // @ts-ignore
+    document.addEventListener("mousemove", mouseMoveHandler);
+    document.addEventListener("mouseup", mouseUpHandler);
   }
 
   // TODO: fix TS errors
@@ -126,6 +127,7 @@ const NavBar = () => {
           <p>Документы</p>
         </div>
         <div 
+        // @ts-ignore
         onMouseDown={mouseDownHandler}
         onClick={resetWidth}
         className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize w-1 h-full absolute bg-primary/10 right-0 top-0" />

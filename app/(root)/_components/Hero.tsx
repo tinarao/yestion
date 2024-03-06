@@ -23,8 +23,7 @@ const Hero = () => {
         <span>А мы вам поможем</span>
       </h1>
       <h3 className="text-md sm:text-xl md:text-2xl font-medium">
-        <span className="underline">Yestion</span> - почти как Notion, правда,
-        не совсем
+        <span>Точно не клон Notion. Будьте уверены.</span> 
       </h3>
       <div className="flex flex-col w-fit mx-auto py-4">
         {isLoading ? (

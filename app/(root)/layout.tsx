@@ -7,7 +7,9 @@ const LandingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="h-full">
+        {children}
+      </main>
       <Footer />
     </>
   );
