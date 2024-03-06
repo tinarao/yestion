@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsLeft, MenuIcon, PlusCircle } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, MouseEvent, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -139,8 +139,19 @@ const NavBar = () => {
         <div>
           <UserMenu />
           <Item
+           onClick={() => {}}
+           label="Поиск"
+           icon={Search}
+           isSearch
+          />
+          <Item
+           onClick={() => {}}
+           label="Настройки"
+           icon={Settings}
+          />
+          <Item
            onClick={createDocHandler}
-           label="New Page"
+           label="Новый документ"
            icon={PlusCircle} 
           />
         </div>
