@@ -3,11 +3,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
-import { ChevronDown, ChevronRight, LucideIcon, Plus } from "lucide-react";
-import { create } from '../../../convex/documents';
+import { ChevronDown, ChevronRight, LucideIcon, MoreHorizontal, Plus, TrashIcon } from "lucide-react";
+import { create, archive } from '../../../convex/documents';
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useUser } from "@clerk/clerk-react";
 
 type ItemProps = {
   id?: Id<"documents">;
@@ -35,8 +37,25 @@ const Item = ({
   expanded,
 }: ItemProps) => {
 
+  // TODO: REFACTOR 
+
+  const { user } = useUser()
   const create = useMutation(api.documents.create);
+  const archive = useMutation(api.documents.archive);
   const router = useRouter();
+
+  const onArchive = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.stopPropagation()
+    if (!id) return;
+    const promise = archive({ id })
+    toast.promise(promise, {
+      loading: "Удаляем...",
+      success: "Удалено!",
+      error: "Ошибка при удалении"
+    })
+  }
 
   const handleExpand = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -106,12 +125,34 @@ const Item = ({
       )}
       {!!id && (
         <div className="ml-auto flex items-center gap-x-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild onClick={e => e.stopPropagation()}>
+              <div role="button" className="opacity-0 rounded-sm group-hover:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600">
+                <MoreHorizontal className="size-4 text-muted-foreground" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-60"
+              align="start"
+              side="right"
+              forceMount
+            >
+              <DropdownMenuItem onClick={onArchive} className="space-x-2">
+                <TrashIcon className="size-4 text-muted-foreground" />
+                <span className="text-red-400">Удалить</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <div className="text-muted-foreground text-xs">
+                <h3>Последние изменения: {user?.username}</h3>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div
             role="button"
             onClick={onCreate} 
             className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
           >
-          <Plus className="size-4 text-muted-foreground" />
+            <Plus className="size-4 text-muted-foreground" />
           </div>
         </div>
       )}
@@ -132,4 +173,3 @@ Item.Skeleton = function ItemSkeleton({ level }: {level?:number}) {
 }
 
 export default Item;
-
