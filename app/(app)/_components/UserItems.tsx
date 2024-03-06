@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/clerk-react";
+import { SignOutButton, useUser } from "@clerk/clerk-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -62,6 +62,9 @@ const UserMenu = () => {
           </p>
         </div>
         <DropdownMenuSeparator />
+        <DropdownMenuItem className="w-full cursor-pointer text-muted-foreground" asChild>
+          <SignOutButton>Выйти</SignOutButton>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

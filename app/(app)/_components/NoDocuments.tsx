@@ -3,17 +3,29 @@
 import Image from "next/image";
 import Empty from "@/public/documents/empty.png";
 import EmptyDark from "@/public/documents/empty-dark.png";
-import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { PlusSquare } from "lucide-react";
-
-import Link from "next/link";
 import ThemeToggle from "@/components/theming/ThemeToggle";
 
-const NoDocuments = () => {
+import Link from "next/link";
+import { toast } from "sonner";
+import { useTheme } from "next-themes";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
+const NoDocuments = () => {
   const { theme } = useTheme();
-  
+  const create = useMutation(api.documents.create);
+
+  const createDocHandler = () => {
+    const promise = create({ title: "Без названия" });
+    toast.promise(promise, {
+      loading: "Создаём документ...",
+      success: "Документ создан!",
+      error: "Не удалось создать документ 😔",
+    });
+  };
+
   return (
     <div className="text-center">
       <ThemeToggle />
@@ -33,12 +45,16 @@ const NoDocuments = () => {
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
           Здесь пусто
         </h1>
-        <Button asChild size="icon" className="my-4">
-            <Link href="/documents" className="flex items-center">
-              <PlusSquare className="size-4" />
-            </Link>
-          </Button>
-      </div>    
+        <Button
+          className="my-4 flex items-center gap-2 mx-auto"
+          onClick={createDocHandler}
+        >
+          <>
+            <PlusSquare className="size-4" />
+            <span>Начать работу</span>
+          </>
+        </Button>
+      </div>
     </div>
   );
 };
