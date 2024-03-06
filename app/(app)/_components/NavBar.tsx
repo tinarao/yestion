@@ -1,10 +1,14 @@
 "use client";
 
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, MouseEvent, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserMenu from "./UserItems";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import Item from "./Item";
+import { toast } from "sonner";
 
 // i hate ts
 
@@ -12,6 +16,9 @@ const NavBar = () => {
 
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  
+  const documents = useQuery(api.documents.get)
+  const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -103,6 +110,15 @@ const NavBar = () => {
     }
   }
 
+  const createDocHandler = () => {
+    const promise = create({ title: "Без названия" });
+    toast.promise(promise, {
+      loading: "Создаём документ...",
+      success: "Документ создан!",
+      error: "Не удалось создать документ 😔",
+    });
+  };
+
   return (
     <>
       <aside
@@ -122,9 +138,21 @@ const NavBar = () => {
         </div>
         <div>
           <UserMenu />
+          <Item
+           onClick={createDocHandler}
+           label="New Page"
+           icon={PlusCircle} 
+          />
         </div>
-        <div className="mt-4">
-          <p>Документы</p>
+        <div className="mt-4 px-4">
+          <p className="font-semibold text-lg border-b-2">Документы</p>
+          <div className="flex flex-col gap-1 py-2">
+            {documents?.map(i => (
+              <div className="py-1 line-clamp-1" key={i._id}>
+                <p className="font-bold text-primary/60">{i.title}</p>
+              </div>
+            ))}
+          </div>
         </div>
         <div 
         // @ts-ignore

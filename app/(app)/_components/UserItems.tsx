@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const UserMenu = () => {
+  
   const { user } = useUser();
 
   return (

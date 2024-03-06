@@ -12,8 +12,11 @@ import { toast } from "sonner";
 import { useTheme } from "next-themes";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/clerk-react";
 
-const NoDocuments = () => {
+const Greeting = () => {
+
+  const { user } = useUser();
   const { theme } = useTheme();
   const create = useMutation(api.documents.create);
 
@@ -43,7 +46,7 @@ const NoDocuments = () => {
       </div>
       <div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-          Здесь пусто
+          И снова привет, {user?.firstName}!
         </h1>
         <Button
           className="my-4 flex items-center gap-2 mx-auto"
@@ -59,4 +62,4 @@ const NoDocuments = () => {
   );
 };
 
-export default NoDocuments;
+export default Greeting;
