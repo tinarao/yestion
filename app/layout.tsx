@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Yestion",
   description: "Пишите, планируйте, делитесь.",
 };
-// bg-background dark:bg-[#1F1F1F]
+
 export default function RootLayout({
   children,
 }: Readonly<{
