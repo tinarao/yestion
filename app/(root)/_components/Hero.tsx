@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const Hero = () => {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <section className="w-full space-y-4">

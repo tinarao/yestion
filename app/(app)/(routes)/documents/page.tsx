@@ -1,11 +1,12 @@
-import React from 'react'
+import NoDocuments from "@/app/(app)/_components/NoDocuments";
 
-const page = () => {
+const Page = () => {
+
   return (
-    <div>
-        <h1>Protected page!</h1>
+    <div className='h-full  flex flex-col items-center justify-center space-y-4'>
+        <NoDocuments />
     </div>
   )
 }
 
-export default page
+export default Page

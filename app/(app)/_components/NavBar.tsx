@@ -4,6 +4,7 @@ import { ChevronsLeft, MenuIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, MouseEvent, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import UserMenu from "./UserItems";
 
 const NavBar = () => {
 
@@ -119,10 +120,10 @@ const NavBar = () => {
           <ChevronsLeft className="size-6" />
         </div>
         <div>
-          <p>Action items</p>
+          <UserMenu />
         </div>
         <div className="mt-4">
-          <p>Documents</p>
+          <p>Документы</p>
         </div>
         <div 
         onMouseDown={mouseDownHandler}

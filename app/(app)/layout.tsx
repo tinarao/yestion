@@ -5,6 +5,7 @@ import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 import * as React from "react";
 import NavBar from "./_components/NavBar";
+import ThemeToggle from "@/components/theming/ThemeToggle";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isLoading, isAuthenticated } = useConvexAuth();
