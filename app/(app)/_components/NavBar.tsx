@@ -1,23 +1,28 @@
 "use client";
 
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import {
+  ChevronsLeft,
+  MenuIcon,
+  PlusCircle,
+  Search,
+  Settings,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, MouseEvent, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserMenu from "./UserItems";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Item from "./Item";
 import { toast } from "sonner";
+import DocumentList from "./DocumentList";
 
 // i hate ts
 
 const NavBar = () => {
-
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  
-  const documents = useQuery(api.documents.get)
+
   const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false);
@@ -28,17 +33,17 @@ const NavBar = () => {
 
   useEffect(() => {
     if (isMobile) {
-      hideSidebar()
+      hideSidebar();
     } else {
-      resetWidth()
+      resetWidth();
     }
-  }, [isMobile])
+  }, [isMobile]);
 
   useEffect(() => {
     if (isMobile) {
-      hideSidebar()
+      hideSidebar();
     }
-  }, [pathname, isMobile])
+  }, [pathname, isMobile]);
 
   const mouseDownHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -50,7 +55,7 @@ const NavBar = () => {
     // @ts-ignore
     document.addEventListener("mousemove", mouseMoveHandler);
     document.addEventListener("mouseup", mouseUpHandler);
-  }
+  };
 
   const mouseMoveHandler = (e: MouseEvent) => {
     if (!isResizingRef.current) return;
@@ -62,53 +67,53 @@ const NavBar = () => {
     if (sidebarRef.current && navbarRef.current) {
       sidebarRef.current.style.width = `${newWidth}px`;
       navbarRef.current.style.setProperty("left", `${newWidth}px`);
-      navbarRef.current.style.setProperty("width", `calc(100% - ${newWidth}px)`);
+      navbarRef.current.style.setProperty(
+        "width",
+        `calc(100% - ${newWidth}px)`
+      );
     }
-  }
+  };
 
   const mouseUpHandler = () => {
     isResizingRef.current = false;
     // @ts-ignore
     document.addEventListener("mousemove", mouseMoveHandler);
     document.addEventListener("mouseup", mouseUpHandler);
-  }
+  };
 
   // TODO: fix TS errors
 
   const resetWidth = () => {
-    if(sidebarRef.current && navbarRef.current) {
+    if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(false);
       setIsResetting(true);
       sidebarRef.current.style.width = isMobile ? "100%" : "240px";
       navbarRef.current.style.setProperty(
         "width",
         isMobile ? "0" : "calc(100%-240px)"
-      )
-      navbarRef.current.style.setProperty(
-        "left",
-        isMobile ? "100%" : "240px"
       );
+      navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
 
       setTimeout(() => {
-        setIsResetting(false)
-      }, 300)
+        setIsResetting(false);
+      }, 300);
     }
-  }
+  };
 
   const hideSidebar = () => {
     if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(true);
       setIsResetting(true);
 
-      sidebarRef.current.style.width = "0"
-      navbarRef.current.style.setProperty("width", "100%")
-      navbarRef.current.style.setProperty("left", "0")
+      sidebarRef.current.style.width = "0";
+      navbarRef.current.style.setProperty("width", "100%");
+      navbarRef.current.style.setProperty("left", "0");
 
       setTimeout(() => {
-        setIsResetting(false)
-      }, 300)
+        setIsResetting(false);
+      }, 300);
     }
-  }
+  };
 
   const createDocHandler = () => {
     const promise = create({ title: "Без названия" });
@@ -138,38 +143,26 @@ const NavBar = () => {
         </div>
         <div>
           <UserMenu />
+          <Item onClick={() => {}} label="Поиск" icon={Search} isSearch />
+          <Item onClick={() => {}} label="Настройки" icon={Settings} />
           <Item
-           onClick={() => {}}
-           label="Поиск"
-           icon={Search}
-           isSearch
-          />
-          <Item
-           onClick={() => {}}
-           label="Настройки"
-           icon={Settings}
-          />
-          <Item
-           onClick={createDocHandler}
-           label="Новый документ"
-           icon={PlusCircle} 
+            onClick={createDocHandler}
+            label="Новый документ"
+            icon={PlusCircle}
           />
         </div>
         <div className="mt-4 px-4">
           <p className="font-semibold text-lg border-b-2">Документы</p>
           <div className="flex flex-col gap-1 py-2">
-            {documents?.map(i => (
-              <div className="py-1 line-clamp-1" key={i._id}>
-                <p className="font-bold text-primary/60">{i.title}</p>
-              </div>
-            ))}
+            <DocumentList />
           </div>
         </div>
-        <div 
-        // @ts-ignore
-        onMouseDown={mouseDownHandler}
-        onClick={resetWidth}
-        className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize w-1 h-full absolute bg-primary/10 right-0 top-0" />
+        <div
+          // @ts-ignore
+          onMouseDown={mouseDownHandler}
+          onClick={resetWidth}
+          className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize w-1 h-full absolute bg-primary/10 right-0 top-0"
+        />
       </aside>
       <div
         ref={navbarRef}
@@ -178,14 +171,14 @@ const NavBar = () => {
         } ${isMobile && "left-0 w-full"}`}
       >
         <nav className="bg-transparent px-3 py-2 w-full">
-            {isCollapsed && (
-              <MenuIcon 
-                role="button"
-                onClick={resetWidth} 
-                className={`size-6 text-muted-foreground rounded-sm   hover:bg-neutral-400 dark:hover:bg-neutral-600 transition`}
-              />
-            )}
-          </nav>
+          {isCollapsed && (
+            <MenuIcon
+              role="button"
+              onClick={resetWidth}
+              className={`size-6 text-muted-foreground rounded-sm   hover:bg-neutral-400 dark:hover:bg-neutral-600 transition`}
+            />
+          )}
+        </nav>
       </div>
     </>
   );
