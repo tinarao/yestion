@@ -50,7 +50,7 @@ const CoverImageModal = ({ children, className }: { children: ReactNode, classNa
       <DialogTrigger className={className}>
         {children}
       </DialogTrigger>
-      <DialogContent className="z-[99999]">
+      <DialogContent className="z-[99999] bg-neutral-100 dark:bg-neutral-700">
         <DialogHeader>
           <h3 className="font-semibold text-lg">Обложка</h3>
         </DialogHeader>

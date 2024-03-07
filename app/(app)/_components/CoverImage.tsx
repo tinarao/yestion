@@ -9,6 +9,7 @@ import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import { useEdgeStore } from "@/lib/edgestore";
 
 type CIProps = {
     url?: string;
@@ -18,13 +19,32 @@ const CoverImage = ({ url }: CIProps) => {
 
   const params = useParams()
   const removeCoverImage = useMutation(api.documents.removeCoverImage);
+  const update = useMutation(api.documents.update);
+  const { edgestore } = useEdgeStore();
 
   const removeCoverImageHandler = async () => {
     removeCoverImage({
       id: params.documentId as Id<"documents">
     })
+
+    await edgestore.publicFiles.delete({
+      url: String(url),
+    });
+    
     toast.success("Удалено!")
   }
+
+  // TODO: изменение обложки
+
+  // const changeCoverImageHandler = async (newPicUrl: string) => {
+  //   const res = await edgestore.publicFiles.upload({
+  //     file,
+  //     options: {
+  //       replaceTargetUrl: url
+  //     }
+  //   })
+
+  // }
 
   return (
     <div 
