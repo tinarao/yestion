@@ -1,34 +1,64 @@
-"use client"
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
+"use client";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
-import useSettings from "@/hooks/useSettings"
-import { Label } from "../ui/label"
-import { DialogTrigger } from "@radix-ui/react-dialog"
-import ThemeToggle from "../theming/ThemeToggle"
+import useSettings from "@/hooks/useSettings";
+import { Label } from "../ui/label";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import ThemeToggle from "../theming/ThemeToggle";
+import { ReactNode } from "react";
 
-const SettingsModal = () => {
+type SMProps = {
+  children: ReactNode;
+};
 
-    const settings = useSettings()
+const SettingsModal = ({ children }: SMProps) => {
+  const settings = useSettings();
 
   return (
-    <Dialog open={settings.isOpen} onOpenChange={settings.onClose}>
-        <DialogTrigger></DialogTrigger>
-        <DialogHeader className="border-b pb-4">
-            <h3 className="text-lg font-semibold">
-                Настройки
-            </h3>
+    <Dialog>
+      <DialogTrigger className="w-full">{children}</DialogTrigger>
+      <DialogContent className="z-[99999]">
+        <DialogHeader>
+          <DialogTitle>Настройки</DialogTitle>
         </DialogHeader>
         <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-1">
-                <Label>Внешний вид</Label>
-                <span className="text-[0.8rem] text-muted-foreground">
-                    Кастомизация внешнего вида приложения
-                </span>
-            </div>
-                <ThemeToggle />
+          <div className="flex flex-col gap-1">
+            <Label>Внешний вид</Label>
+            <span className="text-[0.8rem] text-muted-foreground">
+              Кастомизация внешнего вида приложения
+            </span>
+          </div>
+          <ThemeToggle />
         </div>
+      </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default SettingsModal
+export default SettingsModal;
+
+// const todothing = () => {
+//     return(
+//         <Dialog>
+//     <DialogTrigger>{children}</DialogTrigger>
+//     <DialogHeader className="border-b pb-4">
+//       <h3 className="text-lg font-semibold">Настройки</h3>
+//     </DialogHeader>
+// <div className="flex items-center justify-between">
+//   <div className="flex flex-col gap-1">
+//     <Label>Внешний вид</Label>
+//     <span className="text-[0.8rem] text-muted-foreground">
+//       Кастомизация внешнего вида приложения
+//     </span>
+//   </div>
+//   <ThemeToggle />
+// </div>
+//   </Dialog>
+//     )
+// }

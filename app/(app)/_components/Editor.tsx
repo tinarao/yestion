@@ -18,10 +18,15 @@ const Editor = ({ onChange, initContent, editable }: EditorProps) => {
 
     const editor: BlockNoteEditor = useCreateBlockNote({
         initialContent: initContent ? JSON.parse(initContent) as PartialBlock[] : undefined,
+        
     })
 
     return (
         <BlockNoteView 
+            editable
+            formattingToolbar
+            // @ts-ignore
+            onChange={() => onChange(JSON.stringify(editor.document, null, 2))}
             editor={editor} 
             theme={resolvedTheme === "dark" ? "dark" : "light"}
         />

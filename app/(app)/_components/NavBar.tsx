@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import DocumentList from "./DocumentList";
 import useSettings from "@/hooks/useSettings";
 import TopBar from "./TopBar";
+import ThemeToggle from "@/components/theming/ThemeToggle";
+import SettingsModal from "@/components/modals/SettingsModal";
 
 // i hate ts
 
@@ -26,6 +28,8 @@ const NavBar = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const create = useMutation(api.documents.create);
   const params = useParams();
+
+  const settings = useSettings()
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -145,8 +149,13 @@ const NavBar = () => {
         </div>
         <div>
           <UserMenu />
+          {/* TODO: Настройки */}
           <Item onClick={() => {}} label="Поиск" icon={Search} isSearch />
-          <Item onClick={() => {}} label="Настройки" icon={Settings} />
+          
+          <SettingsModal>
+            <Item onClick={() => {}} label="Настройки" icon={Settings} />
+          </SettingsModal>
+          
           <Item
             onClick={createDocHandler}
             label="Новый документ"
