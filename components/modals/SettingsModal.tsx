@@ -2,12 +2,10 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import useSettings from "@/hooks/useSettings";
 import { Label } from "../ui/label";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import ThemeToggle from "../theming/ThemeToggle";
@@ -18,8 +16,6 @@ type SMProps = {
 };
 
 const SettingsModal = ({ children }: SMProps) => {
-  const settings = useSettings();
-
   return (
     <Dialog>
       <DialogTrigger className="w-full">{children}</DialogTrigger>

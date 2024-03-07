@@ -31,7 +31,6 @@ const Greeting = () => {
 
   return (
     <div className="text-center">
-      <ThemeToggle />
       <div className="w-fit mx-auto">
         {theme === "light" ? (
           <Image src={Empty} height={500} width={500} alt="Нет документов" />

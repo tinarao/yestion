@@ -151,11 +151,9 @@ const NavBar = () => {
           <UserMenu />
           {/* TODO: Настройки */}
           <Item onClick={() => {}} label="Поиск" icon={Search} isSearch />
-          
           <SettingsModal>
             <Item onClick={() => {}} label="Настройки" icon={Settings} />
           </SettingsModal>
-          
           <Item
             onClick={createDocHandler}
             label="Новый документ"

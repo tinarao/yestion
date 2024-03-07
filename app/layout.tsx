@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ConvexClientProvider } from "@/components/providers/ConvexProvider";
 import { Toaster } from "sonner"
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="ru" suppressHydrationWarning>
       <body className={`${inter.className} bg-background dark:bg-[#1F1F1F]`}>
         <ConvexClientProvider>
+        <EdgeStoreProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -31,6 +33,7 @@ export default function RootLayout({
             <Toaster />
             {children}
           </ThemeProvider>
+        </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>

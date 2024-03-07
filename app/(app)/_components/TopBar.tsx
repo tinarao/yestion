@@ -3,11 +3,12 @@
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
-import { MenuIcon } from "lucide-react";
+import { ImagePlus, MenuIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import DocumentTitle from "./DocumentTitle";
 import IconPicker from "@/components/IconPicker";
 import { Button } from "@/components/ui/button";
+import CoverImageModal from "@/components/modals/CoverImageModal";
 
 type TBProps = {
   isCollapsed: boolean;
@@ -20,13 +21,13 @@ const TopBar = ({ isCollapsed, onResetWidth }: TBProps) => {
     documentId: params.documentId as Id<"documents">,
   });
 
-  const updateIcon = useMutation(api.documents.update)
+  const updateIcon = useMutation(api.documents.update);
   const onIconChange = (icon: string) => {
     updateIcon({
-        id: params.documentId as Id<"documents">,
-        icon: icon
-    })
-  }
+      id: params.documentId as Id<"documents">,
+      icon: icon,
+    });
+  };
 
   if (document === undefined) {
     return (
@@ -55,9 +56,24 @@ const TopBar = ({ isCollapsed, onResetWidth }: TBProps) => {
           </h2>
         </div>
       </nav>
-      <IconPicker onChange={icon => onIconChange(icon)}>
-        <Button variant="outline">Сменить иконку</Button>
-      </IconPicker>
+      <div className="flex gap-4">
+        <div>
+          <CoverImageModal className="flex gap-2">
+            {/* Позже поменять на context-menu */}
+            <div 
+              className="flex gap-2 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            >
+              <ImagePlus className="text-muted-foreground" />
+              Загрузить изображение
+            </div>
+          </CoverImageModal>
+        </div>
+        <div>
+          <IconPicker onChange={(icon) => onIconChange(icon)}>
+            <Button variant="ghost">Сменить иконку</Button>
+          </IconPicker>
+        </div>
+      </div>
     </div>
   );
 };

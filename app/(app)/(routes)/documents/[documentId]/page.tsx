@@ -6,6 +6,11 @@ import { Id } from "@/convex/_generated/dataModel";
 import { update } from "@/convex/documents";
 import { useMutation, useQuery } from "convex/react";
 
+import { ImagePlus } from "lucide-react";
+import CoverImageModal from "@/components/modals/CoverImageModal";
+import { Button } from "@/components/ui/button";
+import CoverImage from "@/app/(app)/_components/CoverImage";
+
 type DIPProps = {
   params: {
     documentId: Id<"documents">;
@@ -17,13 +22,13 @@ const DocumentIdPage = ({ params }: DIPProps) => {
     documentId: params.documentId,
   });
 
-  const update = useMutation(api.documents.update)
+  const update = useMutation(api.documents.update);
   const onChange = (content: string) => {
     update({
       id: params.documentId,
-      content
-    })
-  }
+      content,
+    });
+  };
 
   if (document === undefined) {
     return <div></div>;
@@ -39,13 +44,11 @@ const DocumentIdPage = ({ params }: DIPProps) => {
       {/* <div className="py-8">
         <Toolbar initData={document} />
       </div> */}
-      <div className="container">
+    <CoverImage url={document.coverImage} />
+      <div className="container pt-8">
         <h2 className="text-4xl">{document.title}</h2>
         <div className="py-4 pt-12 z-[99999]">
-        <Editor
-          initContent={document.content}
-          onChange={onChange}
-        />
+          <Editor initContent={document.content} onChange={onChange} />
         </div>
       </div>
     </div>
