@@ -76,7 +76,7 @@ const Item = ({
           onExpand?.();
         }
 
-        // router.push(`/documents/${docID}`)
+        router.push(`/documents/${docID}`)
       })
 
     toast.promise(promise, {
