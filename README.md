@@ -1,5 +1,5 @@
 # Точно не клон Notion
-<a href="yestion-gamma.vercel.app">Ссылка</a>
+<a href="https://yestion-gamma.vercel.app">Ссылка</a>
 
 <p align="center">
   <a href="https://skillicons.dev">
