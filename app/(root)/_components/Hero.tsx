@@ -10,6 +10,7 @@ import { useConvexAuth } from "convex/react";
 import Loader from "@/components/Loader";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { SignUpButton } from "@clerk/clerk-react";
 
 const Hero = () => {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -23,18 +24,25 @@ const Hero = () => {
         <span>А мы вам поможем</span>
       </h1>
       <h3 className="text-md sm:text-xl md:text-2xl font-medium">
-        <span>Точно не клон Notion. Будьте уверены.</span> 
+        <span>Точно не клон Notion. Будьте уверены.</span>
       </h3>
       <div className="flex flex-col w-fit mx-auto py-4">
         {isLoading ? (
           <Loader size="xl" />
-        ) : (
+        ) : isAuthenticated ? (
           <Button asChild>
             <Link href="/documents" className="flex items-center">
               Приступить к работе
               <ArrowRight className="h-4 ml-2" />
             </Link>
           </Button>
+        ) : (
+          <SignUpButton mode="modal">
+            <Button>
+              Приступить к работе
+              <ArrowRight className="h-4 ml-2" />
+            </Button>
+          </SignUpButton>
         )}
       </div>
       <div className="w-fit mx-auto">

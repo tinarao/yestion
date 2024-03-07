@@ -23,7 +23,7 @@ const SettingsModal = ({ children }: SMProps) => {
   return (
     <Dialog>
       <DialogTrigger className="w-full">{children}</DialogTrigger>
-      <DialogContent className="z-[99999]">
+      <DialogContent className="z-[99999] bg-neutral-100 dark:bg-neutral-700">
         <DialogHeader>
           <DialogTitle>Настройки</DialogTitle>
         </DialogHeader>

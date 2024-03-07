@@ -20,7 +20,6 @@ const TopBar = ({ isCollapsed, onResetWidth }: TBProps) => {
     });
 
     if (document === undefined) {
-        // TODO: add skeleton later
         return (
             <nav className="bg-background dark:bg-[#1F1F1F] px-3 py-2 w-full flex items-center">
                 <DocumentTitle.Skeleton />
@@ -32,7 +31,7 @@ const TopBar = ({ isCollapsed, onResetWidth }: TBProps) => {
     }
 
     return (
-        <nav className="bg-background dark:bg-[#1F1F1F] px-3 py-2 w-full flex items-center gap-4">
+        <nav className="bg-background dark:bg-[#1F1F1F] px-3 py-2 w-full flex items-center gap-4 border-b">
             {isCollapsed && (
                 <MenuIcon 
                     role="button"
