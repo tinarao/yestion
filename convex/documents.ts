@@ -170,3 +170,34 @@ export const update = mutation({
 
   }
 })
+
+export const removeCoverImage = mutation({
+  args: {id: v.id("documents")},
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Пользователь не авторизован")
+    }
+
+    const userId = identity.subject;
+
+    const { id, ...rest } = args;
+    const existingDocument = await ctx.db.get(args.id)
+
+    if(!existingDocument) {
+      throw new Error("Документ не существует")
+    }
+
+    if (existingDocument.userId !== userId) {
+      throw new Error("Нет доступа")
+    }
+
+    const document = ctx.db.patch(args.id, {
+      coverImage: undefined
+    })
+
+    return document
+
+  }
+})

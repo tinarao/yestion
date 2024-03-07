@@ -13,6 +13,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import { useMutation } from "convex/react";
 import { useParams } from "next/navigation";
 import { ReactNode, useState } from "react";
+import { toast } from "sonner";
 
 const CoverImageModal = ({ children, className }: { children: ReactNode, className?: string }) => {
   
@@ -34,6 +35,7 @@ const CoverImageModal = ({ children, className }: { children: ReactNode, classNa
       setFile(file);
 
       const res = await edgestore.publicFiles.upload({ file });
+
       await update({
         id: params.documentId as Id<"documents">,
         coverImage: res.url
