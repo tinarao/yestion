@@ -23,13 +23,13 @@ const UserMenu = () => {
           <Avatar>
             <AvatarImage
               src={user?.imageUrl}
-              alt={`${user?.username} avatar`}
+              alt={`${user?.firstName} avatar`}
             />
             <AvatarFallback>
-              {user?.username?.substring(0, 2).toUpperCase()}
+              {user?.firstName?.substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <span className="font-medium line-clamp-1">{user?.username}</span>
+          <span className="font-medium line-clamp-1">{user?.firstName}</span>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -43,15 +43,15 @@ const UserMenu = () => {
             <Avatar>
               <AvatarImage
                 src={user?.imageUrl}
-                alt={`${user?.username} avatar`}
+                alt={`${user?.firstName} avatar`}
               />
               <AvatarFallback>
-                {user?.username?.substring(0, 2).toUpperCase()}
+                {user?.firstName?.substring(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-1">
               <p className="text-lg font-semibold leading-none">
-                {user?.username}
+                {user?.firstName}
               </p>
               <p className="text-xs line-clamp-1">{user?.fullName}</p>
             </div>
